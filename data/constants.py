@@ -1,0 +1,13 @@
+
+
+WIDTH, HEIGHT = 800, 800
+ROWS, COL = 8, 8
+SQUARE_SIZE = WIDTH//COL
+
+# colors
+RED = (255,0,0)
+WHITE = (255,255,255)
+BLACK = (0,0,0)
+YELLOW = (0,255,0)
+
+
