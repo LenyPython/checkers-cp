@@ -23,6 +23,7 @@ def main():
 				pass
 	
 		board.drawBoard(WIN)
+		board.drawPieces(WIN)
 		pg.display.update()
 	
 	pg.quit()

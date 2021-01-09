@@ -1,7 +1,8 @@
 from .constants import RED,SQUARE_SIZE,YELLOW
 import pygame as pg
+
 class Piece:
-	PADDING = 10
+	PADDING = 13
 	OUTLINE = 2
 
 	def __init__(self,row,col,color):
@@ -27,8 +28,8 @@ class Piece:
 	
 	def draw(self, win):
 		radius = SQUARE_SIZE//2 - self.PADDING
-		pg.draw.circle(win, YELLOW, (self.position[0],self.position[1]), radius)
-		pg.draw.circle(win, self.color, (self.position[0],self.position[1]), radius-self.OUTLINE)
+		pg.draw.circle(win, YELLOW, (self.position[0], self.position[1]), radius)
+		pg.draw.circle(win, self.color, (self.position[0], self.position[1]), radius - self.OUTLINE)
 
 	def __repr__(self):
 		return str(self.color)

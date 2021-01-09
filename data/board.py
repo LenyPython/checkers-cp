@@ -8,7 +8,6 @@ class Board:
 		self.piece = None
 		self.redPieces = self.whitePieces = 12
 		self.redKings = self.whiteKings = 0
-		self.placePieces()
 
 	def drawBoard(self, board):
 		board.fill(BLACK)	
