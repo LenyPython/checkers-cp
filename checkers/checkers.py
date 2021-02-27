@@ -21,8 +21,8 @@ def main():
 	while run:
 		clock.tick(FPS)
 
-		if game.board.winner():
-			game.board.winner()
+		if game.winner():
+			game.winner()
 
 		for event in pg.event.get():
 			if event.type == pg.QUIT:

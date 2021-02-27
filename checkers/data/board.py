@@ -3,6 +3,14 @@ from .constants import COLS, ROWS, BLACK, RED, SQUARE_SIZE, WHITE, GREEN
 from .piece import Piece
 
 class Board:
+	'''
+	Contains:
+	board list for pieces position
+	number of white and red pieces
+	method for placing pieces at init
+	method for drawing a board
+	'''
+
 	def __init__(self):
 		self.board = []
 		self.piece = None
@@ -24,12 +32,14 @@ class Board:
 				else:
 					self.board[row].append(0)
 
+	# draw red and black squares
 	def drawBoard(self, win):
 		win.fill(BLACK)	
 		for row in range(ROWS):
 			for col in range(row % 2, ROWS, 2):
 				pg.draw.rect(win, RED, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
+	# draw pieces placed in self.board 
 	def drawPieces(self, win):
 		for row in range(ROWS):
 			for col in range(COLS):
@@ -40,6 +50,8 @@ class Board:
 	def selectPiece(self, row, col):
 		return self.board[row][col]
 	
+	# change piece position by placing it in correct row and column
+	# in self.board
 	def movePiece(self, piece, row, col):
 		self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
 		piece.changePosition(row, col)
@@ -51,6 +63,8 @@ class Board:
 			else:
 				self.redKings += 1
 	
+	# remove piece by changing correct row and col in self.board
+	# from class Piece to 0
 	def remove(self, pieces):
 		for piece in pieces:
 			self.board[piece.row][piece.col] = 0
@@ -59,14 +73,8 @@ class Board:
 					self.redPieces -= 1
 				else:
 					self.whitePieces -= 1
-	
-	def winner(self):
-		if self.redPieces == 0:
-			return WHITE
-		elif self.whitePieces == 0:
-			return RED
-		return None
 
+	# validate moves for selected piece
 	def validMoves(self, piece):
 		moves = {}
 		left = piece.col - 1
@@ -84,6 +92,7 @@ class Board:
 
 		return moves
 
+	# hidden method for searchig valid moves for selected piece
 	def _check_movements(self, start, stop, step, color, position, skip=[]):
 		moves = {}
 		last = []
