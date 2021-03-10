@@ -1,5 +1,5 @@
 import pygame as pg
-from tic.board import board
+from tic.board import Board
 
 WIDTH, HEIGHT = 1000, 600
 WIN = pg.display.set_mode((WIDTH,HEIGHT))
@@ -9,7 +9,8 @@ FPS = 60
 def main():
 	clock = pg.time.Clock()
 	run = True
-	Board = Board()
+	ttt = Board()
+	print(ttt.board)
 
 
 	while run:
@@ -24,16 +25,22 @@ def main():
 			#get mouse position at button down event
 			if event.type == pg.MOUSEBUTTONDOWN:
 				clickPosition = pg.mouse.get_pos()
-				row, col = getRowCol(*clickPosition)
-				pos = Board.board[row][col]
+				col, row = ttt.getRowCol(clickPosition)
+				pos = ttt.board[row][col]
 				#if position is diffrent than 0 show error
 				if pos:
+					##############need debugging
+					pg.draw.circle(WIN,(255,0,0), clickPosition, 15)
 
 				#if position is empty/0 place player sign
 				else:
-					Board.placeSign(
+					ttt.placeSign(row, col)
 				
-
+				for x in ttt.board:
+					print(x)
+				print(f'click:{clickPosition}, row: {row}, col: {col}\n \
+					pos: {pos}')
+				
 
 			#fill background with RGB color
 			WIN.fill((79,34,22,31))
