@@ -1,3 +1,5 @@
+import pygame as pg
+from .constants import WIDTH, HEIGHT
 
 class Board:
 	"""Class board for game logic"""
@@ -23,3 +25,8 @@ class Board:
 		self.board[row][col] = self.turn[0]
 		self.changeTurn()
 
+	def drawLines(self, win):
+		for x in range(1,4):
+			pg.draw.line(win, (255,255,255), (200 * x,0), (200 * x,HEIGHT), 5)
+			if x < 3:
+				pg.draw.line(win, (255,255,255), (0,200 * x), (600,200 * x), 5)
