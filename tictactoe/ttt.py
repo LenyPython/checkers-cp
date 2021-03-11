@@ -16,6 +16,14 @@ def main():
 
 	while run:
 		clock.tick(FPS)
+
+		#fill background with RGB color
+		WIN.fill((79,34,22,31))
+
+		#draw lines
+		board.drawLines(WIN)
+		board.drawXO(WIN)
+
 	
 		#main event loop
 		for event in pg.event.get():
@@ -34,8 +42,8 @@ def main():
 					if val:
 						##############need debugging
 
-						pg.draw.circle(WIN,(255,0,0), clickPosition, 15)
-						time.sleep(1)
+						pg.draw.circle(WIN, (255,255,255), clickPosition, 150)
+						time.sleep(0.3)
 
 					#if position is empty/0 place player sign
 					else:
@@ -46,11 +54,7 @@ def main():
 				print(f'click:{clickPosition}, row: {row}, col: {col}\n \
 						val: {val}')
 				
-
-			#fill background with RGB color
-			WIN.fill((79,34,22,31))
-			board.drawLines(WIN)
-
+			
 			#update display
 			pg.display.update()
 	
