@@ -1,4 +1,5 @@
 import pygame as pg
+import time
 from tic.board import Board
 from tic.constants import WIDTH, HEIGHT, BG
 
@@ -13,15 +14,10 @@ def main():
 
 	while run:
 		clock.tick(FPS)
-
+		
 		#fill background with RGB color
 		WIN.fill(BG)
 
-		#draw lines and X's and O's
-		board.drawLines(WIN)
-		board.drawXO(WIN)
-
-	
 		#main event loop
 		for event in pg.event.get():
 			#geting close signal
@@ -40,16 +36,25 @@ def main():
 						board.error(WIN, clickPosition)
 					#if position is empty/0 place player sign
 					else:
-							board.placeSign(row, col)
+						board.placeSign(row, col)
+
+		#draw lines and X's and O's
+		board.drawLines(WIN)
+		board.drawXO(WIN)
 				
-				for x in board.board:
-					print(x)
-				print(f'click:{clickPosition}, row: {row}, col: {col}\n \
-						val: {val}')
-				
+		#update display
+		pg.display.update()
+		#check if ther is any space left or if ther is a winner
+		winner = board.checkWinner()
+
+		####################### show winner
+		if winner:
+			pass
+		#if non moves left set tie and reset after few sec
+		if not board.left:
+			time.sleep(2)
+			board.reset()	
 			
-			#update display
-			pg.display.update()
 	
 	pg.quit()
 
