@@ -1,7 +1,6 @@
 import pygame as pg
-import time
 from tic.board import Board
-from tic.constants import WIDTH, HEIGHT
+from tic.constants import WIDTH, HEIGHT, BG
 
 WIN = pg.display.set_mode((WIDTH,HEIGHT))
 pg.display.set_caption("TicTacToe")
@@ -11,16 +10,14 @@ def main():
 	clock = pg.time.Clock()
 	run = True
 	board = Board()
-	print(board.board)
-
 
 	while run:
 		clock.tick(FPS)
 
 		#fill background with RGB color
-		WIN.fill((79,34,22,31))
+		WIN.fill(BG)
 
-		#draw lines
+		#draw lines and X's and O's
 		board.drawLines(WIN)
 		board.drawXO(WIN)
 
@@ -40,11 +37,7 @@ def main():
 					val = board.board[row][col]
 					#if position is diffrent than 0 show error
 					if val:
-						##############need debugging
-
-						pg.draw.circle(WIN, (255,255,255), clickPosition, 150)
-						time.sleep(0.3)
-
+						board.error(WIN, clickPosition)
 					#if position is empty/0 place player sign
 					else:
 							board.placeSign(row, col)
