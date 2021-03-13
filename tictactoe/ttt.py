@@ -1,9 +1,11 @@
 import pygame as pg
 import time
 from tic.board import Board
-from tic.constants import WIDTH, HEIGHT, BG
+from tic.constants import WIDTH, HEIGHT, BG, RED
 
+pg.init()
 WIN = pg.display.set_mode((WIDTH,HEIGHT))
+font = pg.font.SysFont("cosmicsansms", 100)
 pg.display.set_caption("TicTacToe")
 FPS = 60
 
@@ -44,14 +46,26 @@ def main():
 				
 		#update display
 		pg.display.update()
-		#check if ther is any space left or if ther is a winner
+		#check if there is any space left or if there is a winner
 		winner = board.checkWinner()
 
-		####################### show winner
+		#show winner
 		if winner:
-			pass
+			wins = font.render(f'{winner}\'s wins!', True, RED)
+			WIN.blit(wins, (200, 200))
+			#update display
+			pg.display.update()
+			time.sleep(2)
+			################add a score count
+			board.addScore(winner)
+			print(board.wins)
+			board.reset()
 		#if non moves left set tie and reset after few sec
 		if not board.left:
+			tie = font.render('!!!TIE!!!', True, RED)
+			WIN.blit(tie, (200, 200))
+			#update display
+			pg.display.update()
 			time.sleep(2)
 			board.reset()	
 			
