@@ -21,7 +21,7 @@ class Board:
 		self.resetScore()
 	
 	def resetScore(self):
-		self.wins = {'X': 0, 'O': 0}
+		self.score = {'X': 0, 'O': 0}
 
 	def reset(self):
 		self.board = [[0, 0, 0],
@@ -73,8 +73,8 @@ class Board:
 		for i in range(0, 3):
 			if self.board[0][i] == self.board[1][i] == self.board[2][i] != 0: return self.board[0][i]
 			if self.board[i][0] == self.board[i][1] == self.board[i][2] != 0: return self.board[i][0]
-		if self.board[0][0] == self.board[1][1] == self.board[2][2] != 0:	return self.board[2][2]
+		if self.board[0][0] == self.board[1][1] == self.board[2][2] != 0: return self.board[2][2]
 		elif self.board[0][2] == self.board[1][1] == self.board[2][0] != 0: return self.board[2][0]
 
 	def addScore(self, winner):
-		self.wins[winner] += 1
+		self.score[winner] += 1

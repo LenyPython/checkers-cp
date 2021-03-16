@@ -1,13 +1,40 @@
 import pygame as pg
 import time
 from tic.board import Board
-from tic.constants import WIDTH, HEIGHT, BG, RED
+from tic.constants import WIDTH, HEIGHT, BG, RED, BLUE
 
 pg.init()
 WIN = pg.display.set_mode((WIDTH,HEIGHT))
 font = pg.font.SysFont("cosmicsansms", 100)
 pg.display.set_caption("TicTacToe")
 FPS = 60
+
+def drawGame(win, board):
+	board.drawLines(win)
+	board.drawXO(win)
+	board.drawButtons(win)
+	scoreX = font.render(f'X: {board.score["X"]}', True, BLUE)
+	scoreO = font.render(f'O: {board.score["O"]}', True, BLUE)
+	win.blit(scoreX, (620,0))
+	win.blit(scoreO, (770,0))
+
+def getWinner(win, board):
+	winner = board.checkWinner()
+	if winner:
+		wins = font.render(f'{winner}\'s wins!', True, RED)
+		win.blit(wins, (200, 200))
+		pg.display.update()
+		time.sleep(2)
+		board.addScore(winner)
+		board.reset()
+
+	#if non moves left set tie and reset after few sec
+	if not board.left:
+		tie = font.render('!!!TIE!!!', True, RED)
+		win.blit(tie, (200, 200))
+		pg.display.update()
+		time.sleep(2)
+		board.reset()	
 
 def main():
 	clock = pg.time.Clock()
@@ -16,7 +43,6 @@ def main():
 
 	while run:
 		clock.tick(FPS)
-		
 		#fill background with RGB color
 		WIN.fill(BG)
 
@@ -41,33 +67,11 @@ def main():
 						board.placeSign(row, col)
 
 		#draw lines and X's and O's
-		board.drawLines(WIN)
-		board.drawXO(WIN)
-		board.drawButtons(WIN)
+		drawGame(WIN, board)
 				
-		#update display
 		pg.display.update()
-		#check if there is any space left or if there is a winner
-		winner = board.checkWinner()
+		getWinner(WIN, board)
 
-		#show winner
-		if winner:
-			wins = font.render(f'{winner}\'s wins!', True, RED)
-			WIN.blit(wins, (200, 200))
-			#update display
-			pg.display.update()
-			time.sleep(2)
-			################add a score count
-			board.addScore(winner)
-			board.reset()
-		#if non moves left set tie and reset after few sec
-		if not board.left:
-			tie = font.render('!!!TIE!!!', True, RED)
-			WIN.blit(tie, (200, 200))
-			#update display
-			pg.display.update()
-			time.sleep(2)
-			board.reset()	
 			
 	
 	pg.quit()
