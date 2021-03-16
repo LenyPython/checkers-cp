@@ -8,11 +8,19 @@ class Board:
 	def __init__(self):
 		self._createBoard()
 		self.buttons = [
-
+				Button(650, 125, 'Pl'),
+				Button(650, 200, 'Pl'),
+				Button(800, 125, 'Ai'),
+				Button(800, 200, 'Ai'),
+				Button(650, 425, 'Reset Board', self.reset),
+				Button(650, 500, 'Reset Score', self.resetScore)
 				]
 
 	def _createBoard(self):
 		self.reset()
+		self.resetScore()
+	
+	def resetScore(self):
 		self.wins = {'X': 0, 'O': 0}
 
 	def reset(self):
@@ -33,6 +41,10 @@ class Board:
 		self.board[row][col] = self.turn[0]
 		self.changeTurn()
 		self.left -= 1
+	
+	def drawButtons(self, win):
+		for button in self.buttons:
+			button.drawButton(win)
 
 	def drawXO(self, win):
 		'''Draws X's and O's placed in board.board'''
@@ -57,7 +69,6 @@ class Board:
 		pg.draw.line(win, RED, (pos[0] - 25, pos[1] - 25), (pos[0] + 25, pos[1] + 25), width = 5)
 		pg.draw.line(win, RED, (pos[0] + 25, pos[1] - 25), (pos[0] - 25, pos[1] + 25), width = 5)
 
-	#some debuging cuz 3rd row wins does not count correctly
 	def checkWinner(self):
 		for i in range(0, 3):
 			if self.board[0][i] == self.board[1][i] == self.board[2][i] != 0: return self.board[0][i]

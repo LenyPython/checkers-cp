@@ -43,6 +43,7 @@ def main():
 		#draw lines and X's and O's
 		board.drawLines(WIN)
 		board.drawXO(WIN)
+		board.drawButtons(WIN)
 				
 		#update display
 		pg.display.update()
