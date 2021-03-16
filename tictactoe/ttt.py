@@ -58,7 +58,6 @@ def main():
 			time.sleep(2)
 			################add a score count
 			board.addScore(winner)
-			print(board.wins)
 			board.reset()
 		#if non moves left set tie and reset after few sec
 		if not board.left:

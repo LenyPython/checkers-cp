@@ -1,11 +1,15 @@
 import pygame as pg
 from .constants import WIDTH, HEIGHT, RED, LORANGE, ORANGE
+from .button import Button
 
 class Board:
 	"""Class board for game logic"""
 
 	def __init__(self):
 		self._createBoard()
+		self.buttons = [
+
+				]
 
 	def _createBoard(self):
 		self.reset()
@@ -56,11 +60,10 @@ class Board:
 	#some debuging cuz 3rd row wins does not count correctly
 	def checkWinner(self):
 		for i in range(0, 3):
-			if self.board[0][i] == self.board[1][i] == self.board[2][i] != '0': return self.board[0][i]
-		for i in range(0, 3):
-			if self.board[i][0] == self.board[i][1] == self.board[i][2] != '0':	return self.board[i][0]
-		if self.board[0][0] == self.board[1][1] == self.board[2][2] != '0':	return self.board[2][2]
-		elif self.board[0][2] == self.board[1][1] == self.board[2][0] != '0': return self.board[2][0]
+			if self.board[0][i] == self.board[1][i] == self.board[2][i] != 0: return self.board[0][i]
+			if self.board[i][0] == self.board[i][1] == self.board[i][2] != 0: return self.board[i][0]
+		if self.board[0][0] == self.board[1][1] == self.board[2][2] != 0:	return self.board[2][2]
+		elif self.board[0][2] == self.board[1][1] == self.board[2][0] != 0: return self.board[2][0]
 
 	def addScore(self, winner):
 		self.wins[winner] += 1
