@@ -5,7 +5,7 @@ from tic.constants import WIDTH, HEIGHT, BG, RED, BLUE
 
 pg.init()
 WIN = pg.display.set_mode((WIDTH,HEIGHT))
-font = pg.font.SysFont("cosmicsansms", 100)
+font = pg.font.SysFont("cosmicsansms", 90)
 pg.display.set_caption("TicTacToe")
 FPS = 60
 
@@ -55,25 +55,23 @@ def main():
 			#get mouse position at button down event
 			if event.type == pg.MOUSEBUTTONDOWN:
 				clickPosition = pg.mouse.get_pos()
-				col, row = board.getRowCol(clickPosition)
-				val = 0
-				if row < 3 and col < 3:
-					val = board.board[row][col]
+				if clickPosition[0] <= 600:
+					col, row = board.getRowCol(clickPosition)
 					#if position is diffrent than 0 show error
-					if val:
+					if board.board[row][col]:
 						board.error(WIN, clickPosition)
 					#if position is empty/0 place player sign
 					else:
 						board.placeSign(row, col)
+				else:
+					for button in board.buttons:
+						if button.x < clickPosition[0] < button.x + button.width and button.y < clickPosition[1] < button.y + button. height:
+							button.function()
 
-		#draw lines and X's and O's
 		drawGame(WIN, board)
-				
 		pg.display.update()
 		getWinner(WIN, board)
 
-			
-	
 	pg.quit()
 
 if __name__ == '__main__':

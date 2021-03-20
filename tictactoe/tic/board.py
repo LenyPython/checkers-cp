@@ -1,6 +1,7 @@
 import pygame as pg
 from .constants import WIDTH, HEIGHT, RED, LORANGE, ORANGE
 from .button import Button
+from .ai import Player, Human, Ai
 
 class Board:
 	"""Class board for game logic"""
@@ -41,6 +42,11 @@ class Board:
 		self.board[row][col] = self.turn[0]
 		self.changeTurn()
 		self.left -= 1
+
+	def getMoves(self):
+		'''Get empty fields from board, to allow computer player
+		to know their choices'''
+		return [[i,j] for i, row in enumerate(self.board) for j, val in row if not val]
 	
 	def drawButtons(self, win):
 		for button in self.buttons:

@@ -10,7 +10,9 @@ class Button:
 		self.x = x
 		self.y = y
 		self.img = self.font.render(text, True, BLUE)
-		self.background = pg.Rect(x - 10, y - 10, self.img.get_width() + 20, self.img.get_height() + 20)
+		self.width = self.img.get_width() + 20
+		self.height = self.img.get_height()  + 20
+		self.background = pg.Rect(x - 10, y - 10, self.width, self.height)
 		self.function = func
 
 	def pressed(self):
