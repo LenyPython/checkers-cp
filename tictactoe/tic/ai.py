@@ -7,6 +7,9 @@ class Player:
 class Human(Player):
 	def __init__(self, sign):
 		super().__init__(sign)
+
+	def make_move(self, game):
+		pass
 		
 class Ai(Player):
 	def __init__(self, sign):

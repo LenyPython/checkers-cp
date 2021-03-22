@@ -52,6 +52,7 @@ def main():
 			if event.type == pg.QUIT:
 				run = False
 
+			current_player = board.turn[board.left % 2 - 1]
 			#get mouse position at button down event
 			if event.type == pg.MOUSEBUTTONDOWN:
 				clickPosition = pg.mouse.get_pos()

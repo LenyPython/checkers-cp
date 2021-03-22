@@ -56,7 +56,7 @@ class Board:
 	def getMoves(self):
 		'''Get empty fields from board, to allow computer player
 		to know their choices'''
-		return [[i,j] for i, row in enumerate(self.board) for j, val in row if not val]
+		return [[i,j] for i, row in enumerate(self.board) for j, val in enumerate(row) if not val]
 	
 	def drawButtons(self, win):
 		for button in self.buttons:
