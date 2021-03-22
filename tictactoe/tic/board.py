@@ -9,10 +9,10 @@ class Board:
 	def __init__(self):
 		self._createBoard()
 		self.buttons = [
-				Button(650, 125, 'Pl'),
-				Button(650, 200, 'Pl'),
-				Button(800, 125, 'Ai'),
-				Button(800, 200, 'Ai'),
+				Button(650, 125, 'Pl', self.controlHumanX),
+				Button(650, 200, 'Pl', self.controlHumanO),
+				Button(800, 125, 'Ai', self.controlAiX),
+				Button(800, 200, 'Ai', self.controlAiO),
 				Button(650, 425, 'Reset Board', self.reset),
 				Button(650, 500, 'Reset Score', self.resetScore)
 				]
@@ -28,19 +28,29 @@ class Board:
 		self.board = [[0, 0, 0],
 						[0, 0, 0],
 						[0, 0, 0]]
-		self.turn = ['X', 'O']
+		self.turn = [Human('X'), Human('O')]
 		self.left = 9
 	
-	def changeTurn(self):
-		self.turn.reverse()
+	def controlHumanX(self):
+		self.turn[0] = Human('X')
+
+	def controlHumanO(self):
+		self.turn[1] = Human('O')
+		
+	def controlAiX(self):
+		self.turn[0] = Ai('X')
+
+	def controlAiO(self):
+		self.turn[1] = Ai('O')
 	
 	def getRowCol(self, tup):
 		"""gets tuple argument and returns row and col in list"""
 		return tup[0] // 200, tup[1] // 200
 
 	def placeSign(self, row, col):
-		self.board[row][col] = self.turn[0]
-		self.changeTurn()
+		#place a sing of class Player/Human/Ai which is currently making a move
+		#self.turn[i // 2 - 1].sign <=> Human.sing or Ai.sing
+		self.board[row][col] = self.turn[self.left % 2 - 1].sign
 		self.left -= 1
 
 	def getMoves(self):
