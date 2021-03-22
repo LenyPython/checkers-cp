@@ -1,6 +1,7 @@
 import pygame as pg
 import time
 from tic.board import Board
+from tic.ai import Player, Human, Ai
 from tic.constants import WIDTH, HEIGHT, BG, RED, BLUE
 
 pg.init()
@@ -46,13 +47,17 @@ def main():
 		#fill background with RGB color
 		WIN.fill(BG)
 
+		current_player = board.turn[board.left % 2 - 1]
+		if isinstance(current_player, Ai):
+			time.sleep(0.4)
+			board.placeSign(*current_player.make_move(board))
+
 		#main event loop
 		for event in pg.event.get():
 			#geting close signal
 			if event.type == pg.QUIT:
 				run = False
 
-			current_player = board.turn[board.left % 2 - 1]
 			#get mouse position at button down event
 			if event.type == pg.MOUSEBUTTONDOWN:
 				clickPosition = pg.mouse.get_pos()

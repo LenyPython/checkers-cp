@@ -8,6 +8,7 @@ class Board:
 
 	def __init__(self):
 		self._createBoard()
+		self.turn = [Human('X'), Human('O')]
 		self.buttons = [
 				Button(650, 125, 'Pl', self.controlHumanX),
 				Button(650, 200, 'Pl', self.controlHumanO),
@@ -28,7 +29,6 @@ class Board:
 		self.board = [[0, 0, 0],
 						[0, 0, 0],
 						[0, 0, 0]]
-		self.turn = [Human('X'), Human('O')]
 		self.left = 9
 	
 	def controlHumanX(self):
