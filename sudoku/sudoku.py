@@ -1,5 +1,6 @@
 import pygame as pg
 from game.constants import WIDTH, HEIGHT, WHITE
+from game.board import Board
 
 
 def main():
@@ -8,6 +9,7 @@ def main():
 	FPS = 60
 	clock = pg.time.Clock()
 	run = True
+	game = Board()
 
 	while run:
 		clock.tick(FPS)
@@ -16,6 +18,7 @@ def main():
 			if event.type == pg.QUIT:
 				run = False
 
+		game.draw_lines(WIN)
 		pg.display.update()
 	pg.quit()
 
