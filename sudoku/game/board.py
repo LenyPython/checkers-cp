@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import pygame as pg
+from game.validator import valid_input, valid_solution
 from game.button import Button
 from .constants import WIDTH, HEIGHT, BLACK, GREY
 
@@ -12,11 +13,30 @@ class Board:
 						Button(750, 115, 'Clear board', width=350, border=5),
 						Button(750, 215, 'Check solution', width=350, border=5),
 						Button(750, 315, 'Backtrack solution', width=350, border=5),
-						Button(750, 415, 'Create board', width=350, border=5)]
+						Button(750, 415, 'Random', width=350, border=5)]
 	
 	def _create_board(self):
 		 board = np.zeros((9,9), dtype=np.int8)
-		 
+		 #first fill the diagonal squares with number from 1-9
+		 for square in range(3):
+			 while 0 in board[3 * square:3 * square + 3,3 * square:3 * square + 3]:
+				 r_num = random.randint(1,9)
+				 if r_num not in board[3 * square:3 * square + 3,3 * square:3 * square + 3]:
+					 num_not_in = True
+					 while num_not_in:
+						 i,j = random.randint(3 * square,3 * square +2), random.randint(3 * square, 3 * square + 2)
+						 if not board[i][j]:
+							 board[i][j] = r_num
+							 num_not_in = False
+		 #fill rest of the board with random numbers meeting the requirements
+		 for i, row in enumerate(board):
+			 for j, value in enumerate(row):
+				 if not value:
+					 for num in range(1,10):
+						 if valid_input(board, i, j, num):
+							 board[i][j] = num
+							 break
+		 return board
 		 
 	def select_spot(self, row, col):
 		self.selected = {'x': col, 'y': row}
@@ -36,27 +56,5 @@ class Board:
 	def draw_board(self, win):
 		pass
 
-	def valid_solution(board):
-		check = [[], [], [], [], [], [], [], [], []]
-		for i, row in enumerate(board):
-			if not all(n in row for n in range(1,10)): return False
-			if i < 3:
-				check[0] += row[:3]
-				check[1] += row[3:6]
-				check[2] += row[6:]
-			elif i < 6:
-				check[3] += row[:3]
-				check[4] += row[3:6]
-				check[5] += row[6:]
-			else:
-				check[6] += row[:3]
-				check[7] += row[3:6]
-				check[8] += row[6:]
-		for sub in check:
-			if not all(n in sub for n in range(1,10)): return False
-		check = [[x[i] for x in board] for i in range(9)]
-		for sub in check:
-			if not all(n in sub for n in range(1,10)): return False
-		return True
 
 

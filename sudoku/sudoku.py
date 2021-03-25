@@ -33,6 +33,7 @@ def main():
 	
 		if game.selected:
 			pg.draw.circle(WIN, GREY, ((game.selected['x'] * 75) + 48, (game.selected['y'] * 75) + 48), 35)
+			print(game.board)
 
 		game.draw_buttons(WIN)
 		game.draw_lines(WIN)
