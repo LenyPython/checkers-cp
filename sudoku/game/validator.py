@@ -10,9 +10,9 @@ def valid_input(board, row, col, num):
 					return True
 
 
-def valid_solution(self):
+def valid_solution(board):
 	check = [[], [], [], [], [], [], [], [], []]
-	for i, row in enumerate(self.board):
+	for i, row in enumerate(board):
 		if not all(n in row for n in range(1,10)): return False
 		if i < 3:
 			check[0] += row[:3]

@@ -20,10 +20,9 @@ def create_board():
 	 return board
 
 def fill_remaining_spots(board, i = 0, j = 0):
-	 if i < 9 and j >= 9:
-		 i, j = i + 1, 0
-	 if i >= 8 and j >= 6:
-		 return True
+	 #change row after reaching last column
+	 if i < 9 and j >= 9: i, j = i + 1, 0
+	 if i >= 8 and j >= 6: return True
 	 #pass first filled diagonal square
 	 if i < 3 and j < 3: j = 3
 	 #pass second diagonal square
@@ -41,5 +40,3 @@ def fill_remaining_spots(board, i = 0, j = 0):
 		 board[i][j] = 0
 	 return False
 
-if __name__ == '__main__':
-	print(Creator.create_board())
