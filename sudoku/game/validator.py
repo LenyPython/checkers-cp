@@ -11,12 +11,23 @@ def valid_input(board, row, col, num):
 
 
 def valid_solution(board):
-	if any(n not in row for row in board for n in range(1,10)): return False
-	temp = zip(*board)
-	if any(n not in col for col in temp for n in range(1,10)): return False
-	for x in range(0,7,3):
-		if any(n not in board[x * 3:x * 3 + 3,x * 3:x * 3 + 3] for n in range(1,10)):
-			print('failed')
-			return False
-
+	squares = [[], [], [], [], [], [], [], [], []]
+	if any(n not in col for col in zip(*board) for n in range(1,10)): return False
+	for i, row in enumerate(board):
+		if any(n not in row for n in range(1,10)): return False
+		if i < 3:
+			squares[0].extend(row[:3])
+			squares[1].extend(row[3:6])
+			squares[2].extend(row[6:])
+		elif i < 6:
+			squares[3].extend(row[:3])
+			squares[4].extend(row[3:6])
+			squares[5].extend(row[6:])
+		else:
+			squares[6].extend(row[:3])
+			squares[7].extend(row[3:6])
+			squares[8].extend(row[6:])
+	for square in squares:
+		if any(n not in square for n in range(1,10)): return False
+		
 	return True
