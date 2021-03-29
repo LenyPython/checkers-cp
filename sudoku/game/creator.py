@@ -4,22 +4,35 @@ import numpy as np
 
 def create_board():
 	 board = np.zeros((9,9), dtype=np.int8)
-	 #first fill the diagonal squares with number from 1-9
 	 for square in range(3):
-		 while 0 in board[3 * square:3 * square + 3,3 * square:3 * square + 3]:
-			 r_num = random.randint(1,9)
-			 if r_num not in board[3 * square:3 * square + 3,3 * square:3 * square + 3]:
-				 num_not_in = True
-				 while num_not_in:
-					 i,j = random.randint(3 * square,3 * square +2), random.randint(3 * square, 3 * square + 2)
-					 if not board[i][j]:
-						 board[i][j] = r_num
-						 num_not_in = False
-	 #fill rest of the board with random numbers meeting the requirements
+		 fill_the_square(board, square)
 	 fill_remaining_spots(board)
+	 remove_random_spots(board)
 	 return board
 
+def remove_random_spots(board, i = 51):
+	'''Remove i items form the vorad of dimmentions 9x9'''
+	while i:
+		x, y = random.randint(0,8), random.randint(0,8)
+		if board[x][y]:
+			board[x][y] = 0
+			i -= 1
+
+
+def fill_the_square(board, square):
+	 '''Fill the three diagonal squares with randomly generated numbers'''
+	 while 0 in board[3 * square:3 * square + 3,3 * square:3 * square + 3]:
+		 for num in range(1,10):
+			 num_not_in = True
+			 while num_not_in:
+				 i,j = random.randint(3 * square,3 * square +2), random.randint(3 * square, 3 * square + 2)
+				 if not board[i][j]:
+					 board[i][j] = num
+					 num_not_in = False
+
 def fill_remaining_spots(board, i = 0, j = 0):
+	 '''fill the sudoku board recursively'''
+
 	 #change row after reaching last column
 	 if i < 9 and j >= 9: i, j = i + 1, 0
 	 if i >= 8 and j >= 6: return True

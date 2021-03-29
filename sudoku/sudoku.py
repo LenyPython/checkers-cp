@@ -41,6 +41,7 @@ def main():
 
 		game.draw_buttons(WIN)
 		game.draw_lines(WIN)
+		game.draw_board(WIN)
 		pg.display.update()
 	pg.quit()
 

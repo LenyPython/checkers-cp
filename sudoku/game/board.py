@@ -7,6 +7,9 @@ from .constants import WIDTH, HEIGHT, BLACK, GREY
 from .creator import create_board
 
 class Board:
+	pg.font.init()
+	font = pg.font.SysFont("cosmicsansms", 100)
+
 	def __init__(self):
 		self.board = []
 		self.selected = None
@@ -21,9 +24,9 @@ class Board:
 
 	def solution_check(self):
 		if valid_solution(self.board):
-			print('solution is valid')
+			print('Solution is valid')
 		else:
-			print('Wrong')
+			print('Wrong Solution')
 	
 	def print_board(self):
 		print(self.board)
@@ -44,7 +47,10 @@ class Board:
 			 button.draw_button(win)
 	
 	def draw_board(self, win):
-		pass
-
+		for y, row in enumerate(self.board):
+			for x, value in enumerate(row):
+				if value:
+					number = self.font.render(str(value), True, BLACK)
+					win.blit(number, (30 + x * 75, 15 + y * 75))
 
 
