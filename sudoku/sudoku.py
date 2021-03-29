@@ -27,7 +27,7 @@ def main():
 				run = False
 			if event.type == pg.KEYDOWN:
 				if game.selected and pg.key.name(event.key) in '123456789':
-					game.board[game.selected['y']][game.selected['x']] = str(event.key - 48)
+					game.user_input[game.selected['y']][game.selected['x']] = str(event.key - 48)
 					game.unselect()
 					
 			if event.type == pg.MOUSEBUTTONDOWN:

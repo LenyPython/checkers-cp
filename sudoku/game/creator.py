@@ -12,7 +12,7 @@ def create_board(board):
 	fill_remaining_spots(board)
 	remove_random_spots(board)
 
-def remove_random_spots(board, i = 31):
+def remove_random_spots(board, i = 46):
 	'''Remove i items form the vorad of dimmentions 9x9'''
 	while i:
 		x, y = random.randint(0,8), random.randint(0,8)
