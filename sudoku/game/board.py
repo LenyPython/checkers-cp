@@ -24,8 +24,7 @@ class Board:
 		create_board(self.board)
 	
 	def show_alg(self):
-		self.board = np.zeros((9,9), dtype=np.int8)
-		create_board(self.board)
+		pass
 
 	def solution_check(self):
 		if valid_solution(self.board):
@@ -59,4 +58,8 @@ class Board:
 					number = self.font.render(str(value), True, BLACK)
 					win.blit(number, (30 + x * 75, 15 + y * 75))
 
+	def draw_all(self, win):
+		self.draw_buttons(win)
+		self.draw_lines(win)
+		self.draw_board(win)
 
