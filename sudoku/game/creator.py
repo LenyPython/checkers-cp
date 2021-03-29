@@ -1,14 +1,14 @@
 from .validator import valid_input
 import random
 import numpy as np
+import time
 
-def create_board():
-	 board = np.zeros((9,9), dtype=np.int8)
+def create_board(board):
 	 for square in range(3):
 		 fill_the_square(board, square)
+		 time.sleep(1)
 	 fill_remaining_spots(board)
 	 remove_random_spots(board)
-	 return board
 
 def remove_random_spots(board, i = 51):
 	'''Remove i items form the vorad of dimmentions 9x9'''
@@ -25,9 +25,9 @@ def fill_the_square(board, square):
 		 for num in range(1,10):
 			 num_not_in = True
 			 while num_not_in:
-				 i,j = random.randint(3 * square,3 * square +2), random.randint(3 * square, 3 * square + 2)
-				 if not board[i][j]:
-					 board[i][j] = num
+				 x, y = random.randint(3 * square,3 * square +2), random.randint(3 * square, 3 * square + 2)
+				 if not board[x][y]:
+					 board[x][y] = num
 					 num_not_in = False
 
 def fill_remaining_spots(board, i = 0, j = 0):

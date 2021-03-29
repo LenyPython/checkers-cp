@@ -3,8 +3,9 @@ from game.constants import WIDTH, HEIGHT, WHITE, GREY
 from game.board import Board
 
 def mark_spot(board, x, y):
+	print(board.board[x][y])
 	if not board.selected:
-		board.select_spot(y, x)
+		if not board.board[x][y]: board.select_spot(y, x)
 	elif x == board.selected['x'] and y == board.selected['y']:
 		board.unselect()
 	else:
@@ -37,7 +38,6 @@ def main():
 
 		if game.selected:
 			pg.draw.circle(WIN, GREY, ((game.selected['x'] * 75) + 48, (game.selected['y'] * 75) + 48), 35)
-			print(game.board)
 
 		game.draw_buttons(WIN)
 		game.draw_lines(WIN)
