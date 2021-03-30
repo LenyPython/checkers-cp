@@ -38,8 +38,9 @@ def main():
 					mark_spot(game, x_pos, y_pos)
 				else:
 					for button in game.buttons:
-						if button.x < x_pos < button.x + button.width and button.y < y_pos < button.y + button. height:
-										button.function()
+						if button.x < x_pos < button.x + button.width and button.y < y_pos < button.y + button.height:
+							if button.function.__name__ == 'show_alg': button.function(WIN)
+							else: button.function()
 
 		if game.selected:
 			pg.draw.circle(WIN, GREY, ((game.selected['x'] * 75) + 48, (game.selected['y'] * 75) + 48), 35)

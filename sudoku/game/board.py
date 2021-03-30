@@ -1,9 +1,10 @@
 import numpy as np
 import random
+import time
 import pygame as pg
 from .validator import valid_solution
 from .button import Button
-from .constants import WIDTH, HEIGHT, BLACK, GREY, RED
+from .constants import WIDTH, HEIGHT, BLACK, GREY, RED, WHITE
 from .creator import create_board
 
 class Board:
@@ -17,16 +18,25 @@ class Board:
 		self.buttons = [Button(750, 15, 'Create board', width=350, border=5, func=self.create_game),
 						Button(750, 115, 'Show creation', width=350, border=5,func=self.show_alg),
 						Button(750, 215, 'Check solution', width=350, border=5, func=self.solution_check),
-						Button(750, 315, 'Backtrack solution', width=350, border=5),
-						Button(750, 415, 'Clear board', width=350, border=5)]
+						Button(750, 315, 'Backtrack solution', width=350, border=5, func=self.show_alg),
+						Button(750, 415, 'Clear board', width=350, border=5, func=self.clear)]
 	
-	def create_game(self):
+	def create_game(self, func=None):
 		self.board = np.zeros((9,9), dtype=np.int8)
 		self.user_input = np.zeros((9,9), dtype=np.int8)
-		create_board(self.board)
+		create_board(self.board, func)
 	
-	def show_alg(self):
-		pass
+	def show_alg(self, win):
+		def show():
+			win.fill(WHITE)
+			self.draw_all(win)
+			pg.display.update()
+			time.sleep(0.1)
+		self.create_game(show)
+
+	def clear(self):
+		self.user_input = np.zeros((9,9), dtype=np.int8)
+
 
 	def solution_check(self):
 		if valid_solution(self.board + self.user_input):

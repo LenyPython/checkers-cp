@@ -1,27 +1,27 @@
 from .validator import valid_input
 import random
 import numpy as np
-import time
 
-def create_board(board):
+def create_board(board, func=None):
 
 	'''sudoku creation algorithm. first filling the diagonal squares. then recursively
 	adding other spots. Afterwards removing random i number of them.'''
 	for square in range(3):
-		fill_the_square(board, square)
-	fill_remaining_spots(board)
-	remove_random_spots(board)
+		fill_the_square(board, square, func)
+	fill_remaining_spots(board, func)
+	remove_random_spots(board, func)
 
-def remove_random_spots(board, i = 46):
-	'''Remove i items form the vorad of dimmentions 9x9'''
+def remove_random_spots(board, func=None, i = 46):
+	'''Remove i items form the borad of dimmentions 9x9'''
 	while i:
 		x, y = random.randint(0,8), random.randint(0,8)
 		if board[x][y]:
 			board[x][y] = 0
+			if func: func()
 			i -= 1
 
 
-def fill_the_square(board, square):
+def fill_the_square(board, square, func=None):
 	 '''Fill the three diagonal squares with randomly generated numbers'''
 	 while 0 in board[3 * square:3 * square + 3,3 * square:3 * square + 3]:
 		 for num in range(1,10):
@@ -30,9 +30,10 @@ def fill_the_square(board, square):
 				 x, y = random.randint(3 * square,3 * square +2), random.randint(3 * square, 3 * square + 2)
 				 if not board[x][y]:
 					 board[x][y] = num
+					 if func: func()
 					 num_not_in = False
 
-def fill_remaining_spots(board, i = 0, j = 0):
+def fill_remaining_spots(board, func=None, i = 0, j = 0):
 	 '''fill the sudoku board recursively'''
 
 	 #change row after reaching last column
@@ -50,7 +51,8 @@ def fill_remaining_spots(board, i = 0, j = 0):
 	 for num in range(1,10):
 		 if valid_input(board, i, j, num):
 			 board[i][j] = num
-			 if fill_remaining_spots(board, i, j + 1):
+			 if func: func()
+			 if fill_remaining_spots(board, func, i, j + 1):
 				 return True
 		 board[i][j] = 0
 	 return False
