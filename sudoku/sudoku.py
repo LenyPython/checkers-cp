@@ -21,7 +21,6 @@ def main():
 
 	while run:
 		clock.tick(FPS)
-		WIN.fill(WHITE)
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
 				run = False
@@ -39,13 +38,10 @@ def main():
 				else:
 					for button in game.buttons:
 						if button.x < x_pos < button.x + button.width and button.y < y_pos < button.y + button.height:
-							if button.function.__name__ == 'show_alg': button.function(WIN)
-							else: button.function()
+							button.function()
 
-		if game.selected:
-			pg.draw.circle(WIN, GREY, ((game.selected['x'] * 75) + 48, (game.selected['y'] * 75) + 48), 35)
 
-		game.draw_all(WIN)
+		game.draw_all()
 		pg.display.update()
 	pg.quit()
 
