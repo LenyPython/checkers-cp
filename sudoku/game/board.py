@@ -4,12 +4,13 @@ import time
 import pygame as pg
 from .validator import valid_solution, valid_input
 from .button import Button
-from .constants import WIDTH, HEIGHT, BLACK, GREY, RED, WHITE
+from .constants import WIDTH, HEIGHT, BLACK, GREY, RED, WHITE, GREEN
 from .creator import create_board
 
 class Board:
 	pg.font.init()
 	font = pg.font.SysFont("cosmicsansms", 100)
+	msg_font = pg.font.SysFont("cosmicsansms", 45) 
 
 	def __init__(self):
 		self.board = np.zeros((9,9), dtype=np.int8)
@@ -27,24 +28,22 @@ class Board:
 		self.user_input = np.zeros((9,9), dtype=np.int8)
 		create_board(self.board, show)
 	
-	def backtrack(self):
-		def solution(x = 0, y = 0):
-			# go to the next row after reaching last col
-			if x < 9 and y >= 9 : x,y = x + 1, 0
-			#after reaching end return True
-			if x >= 8 and y >= 8: return True
+	def backtrack(self, x = 0, y = 0):
+		# go to the next row after reaching last col
+		if x < 8 and y > 8 : x,y = x + 1, 0
+		#after reaching end return True
+		if x >= 8 and y > 8: return True
+		#if we get a filled spot move to next one
+		if self.board[x][y] != 0:
+			if self.backtrack(x, y + 1): return True
+		else:
 			for num in range(1,10):
-				#if we get a filled spot move to next one
-				if self.board[x][y]: solution(x, y + 1) 
-				else:
-					if valid_input(self.board, x, y, num):
-						self.board[x][y] = num
-						self.show()
-						if solution(x, y + 1):
-							return True
-					self.board[x][y] = 0
+				if valid_input(self.board + self.user_input, x, y, num):
+					self.user_input[x][y] = num
+					self.show()
+					if self.backtrack(x, y + 1): return True
+				self.user_input[x][y] = 0
 			return False
-		solution()
 	
 	def show(self):
 		'''display function for inner use of algorithms/methods'''
@@ -62,10 +61,19 @@ class Board:
 
 
 	def solution_check(self):
+		win = pg.display.get_surface()
 		if valid_solution(self.board + self.user_input):
-			print('Solution is valid')
+			msg = self.msg_font.render('Congratz! Valid soution!', True, GREEN)
+			self.draw_all()
+			win.blit(msg, (700,500))
+			pg.display.update()
+			time.sleep(3)
 		else:
-			print('Wrong Solution')
+			msg = self.msg_font.render('!!! Wrong soution !!!', True, RED)
+			self.draw_all()
+			win.blit(msg, (700,500))
+			pg.display.update()
+			time.sleep(3)
 		 
 	def select_spot(self, row, col):
 		self.selected = {'x': col, 'y': row}
@@ -98,7 +106,7 @@ class Board:
 		win = pg.display.get_surface()
 		win.fill(WHITE)
 		self.draw_buttons(win)
-		self.draw_lines(win)
-		self.draw_numbers(win)
 		if self.selected:
 			pg.draw.circle(win, GREY, ((self.selected['x'] * 75) + 48, (self.selected['y'] * 75) + 48), 35)
+		self.draw_lines(win)
+		self.draw_numbers(win)
